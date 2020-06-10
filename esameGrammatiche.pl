@@ -4,11 +4,17 @@ messaggio(N) --> situazioneAmore(N),". ", { 2 is (N mod 4) + 1}.
 messaggio(N) --> situazioneAttualeLavoro(N),". ", situazioneSalute(N), { 3 is (N mod 4) + 1}.
 messaggio(N) --> fraseGenericaEventoPositivo,". ", situazioneSalute(N), { 4 is (N mod 4) + 1}.
 
-
+/*
 %tipi sottomessaggi
 eventiFuturi(N) --> eventoFuturoAmore(N),", ",eventoFuturoLavoro,", ",eventoFuturoSalute," e ",eventoFuturoVincite, { 1 is (N mod 3) + 1}.
 situazioneAmore(N) --> situazioneAttualeAmore," e ", eventoFuturoAmore(N), { 2 is (N mod 3) + 1}.
 situazioneSalute(N) --> situazioneAttualeSalute(N)," e ", eventoFuturoSalute, { 3 is (N mod 3) + 1}.
+*/
+
+%tipi sottomessaggi
+eventiFuturi(N) --> eventoFuturoAmore(N),", ",eventoFuturoLavoro,", ",eventoFuturoSalute," e ",eventoFuturoVincite.
+situazioneAmore(N) --> situazioneAttualeAmore," e ", eventoFuturoAmore(N).
+situazioneSalute(N) --> situazioneAttualeSalute(N)," e ", eventoFuturoSalute.
 
 %tipi frasi
 situazioneAttualeAmore --> "Sei innamorato".
@@ -36,6 +42,7 @@ sommaElementiLista([A|R],N):-
     sommaElementiLista(R,N1),
     N is A + N1.
 
+/*
 %messaggioPerPersona(!Atmo,!String,!String,?String)
 messaggioPerPersona(Nome,DataDiNascita,DataDiOggi,MESSAGGIO):-
     string_to_atom(DataDiNascita, D1),
@@ -43,18 +50,18 @@ messaggioPerPersona(Nome,DataDiNascita,DataDiOggi,MESSAGGIO):-
     hash(Nome,N1),
     hash(D1,N2),
     hash(D2,N3),
-    Key is (N1 + N2 + N3) mod 100,
+    Key is (N1 + N2 + N3),
     write(Key),nl,
     messaggio(Key,M,[]),!,
-    atom_codes(MESSAGGIO, M).
+    atom_codes(MESSAGGIO, M).*/
 
 
 %messaggioPerPersona(!Atmo,!List,!List,?String)
 messaggioPerPersona(Nome,DataDiNascita,DataDiOggi,MESSAGGIO):-
+    hash(Nome,N1),
     sommaElementiLista(DataDiNascita, N2),
     sommaElementiLista(DataDiOggi, N3),
-    hash(Nome,N1),
-    Key is (N1 + N2 + N3) mod 100,
+    Key is (N1 + N2 + N3),
     write(Key),nl,
     messaggio(Key,M,[]),!,
     atom_codes(MESSAGGIO, M).
